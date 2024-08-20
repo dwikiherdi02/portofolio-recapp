@@ -1,0 +1,13 @@
+.form-signin, .form-signup {
+    max-width: 450px;
+    padding: 1rem;
+
+}
+
+@include media-breakpoint-down(sm) {
+    .form-signin, .form-signup {
+        .card {
+            border: none;
+        }
+    }
+}
