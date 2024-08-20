@@ -1,0 +1,4 @@
+./app/.vscode
+./app/vendor
+./app/node_modules
+./app/.env
