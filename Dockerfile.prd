@@ -18,9 +18,9 @@ RUN apt-get update && apt-get install -qq -y \
     libzip-dev
 
 # Get NodeJS
-COPY --from=node:20.14-slim /usr/local/bin /usr/local/bin
+COPY --from=node:20.16-slim /usr/local/bin /usr/local/bin
 # Get npm
-COPY --from=node:20.14-slim /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node:20.16-slim /usr/local/lib/node_modules /usr/local/lib/node_modules
 
 COPY --from=composer:2.7.6 /usr/bin/composer /usr/bin/composer
 
