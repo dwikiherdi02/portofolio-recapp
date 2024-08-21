@@ -28,3 +28,5 @@
 /src/.idea
 /src/.vscode
 /src/composer.phar
+
+/src-*
