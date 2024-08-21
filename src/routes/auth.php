@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\Auth\OauthController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use Facades\App\Repositories\UserRepository as UserRepo;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 use Livewire\Volt\Volt;
 
 Route::middleware('guest')->group(function () {
@@ -16,6 +20,18 @@ Route::middleware('guest')->group(function () {
 
     Volt::route('reset-password/{token}', 'pages.auth.reset-password')
         ->name('password.reset');
+
+
+    Route::prefix('oauth')->group(function () {
+        Route::get('{provider}/redirect/{frompage}', [OauthController::class, 'redirectHandler'])
+            ->whereIn('provider', ['google'])
+            ->whereIn('frompage', ['signin', 'signup'])
+            ->name('oauth.redirect');
+
+        Route::get('{provider}/callback', [OauthController::class, 'callbackHanlder'])
+            ->whereIn('provider', ['google'])
+            ->name('oauth.callback');
+    });
 });
 
 Route::middleware('auth')->group(function () {

@@ -4,6 +4,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rules;
 
 use function Livewire\Volt\layout;
@@ -37,6 +38,10 @@ $register = function () {
     $this->redirect(route('dashboard', absolute: false), navigate: true);
 };
 
+$signUpWithGoogle = function () {
+    return redirect()->route('oauth.redirect', ['provider' => 'google', 'frompage' => 'signup']);
+}
+
 ?>
 
 <div class="min-vw-100">
@@ -51,7 +56,7 @@ $register = function () {
                 </p>
 
                 <div class="mb-4">
-                    <button class="btn btn-light btn-with-icon border w-100 py-3 fw-medium">
+                    <button class="btn btn-light btn-with-icon border w-100 py-3 fw-medium" wire:click="signUpWithGoogle">
                         <span class="icon">
                             <img src="{{ asset('images/icon/google.png') }}" alt="Google Icon">
                         </span>

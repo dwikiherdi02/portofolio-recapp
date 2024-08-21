@@ -20,6 +20,10 @@ $login = function () {
     $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
 };
 
+$signInWithGoogle = function () {
+    return redirect()->route('oauth.redirect', ['provider' => 'google', 'frompage' => 'signin']);
+}
+
 ?>
 
 <div class="min-vw-100">
@@ -50,7 +54,7 @@ $login = function () {
                 <div class="line-divider mb-4">OR</div>
 
                 <div class="mb-4">
-                    <button class="btn btn-light btn-with-icon border w-100 py-3 fw-medium">
+                    <button wire:click="signInWithGoogle" class="btn btn-light btn-with-icon border w-100 py-3 fw-medium">
                         <span class="icon">
                             <img src="{{ asset('images/icon/google.png') }}" alt="Google Icon">
                         </span>
