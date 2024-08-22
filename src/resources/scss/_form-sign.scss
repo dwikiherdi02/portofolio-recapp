@@ -1,11 +1,11 @@
-.form-signin, .form-signup, .form-forgot {
+.form-signin, .form-signup, .form-forgot, .form-create-password {
     max-width: 450px;
     padding: 1rem;
 
 }
 
 @include media-breakpoint-down(sm) {
-    .form-signin, .form-signup {
+    .form-signin, .form-signup, .form-forgot, .form-create-password {
         .card {
             border: none;
         }

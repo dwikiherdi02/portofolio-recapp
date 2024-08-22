@@ -3,14 +3,23 @@
 use App\Livewire\Forms\LoginForm;
 use Illuminate\Support\Facades\Session;
 
-use function Livewire\Volt\form;
-use function Livewire\Volt\layout;
+use function Livewire\Volt\{mount, layout, title, state, form};
 
 layout('layouts.guest');
 
+title('Sign In');
+
+state(['errorMessage']);
+
 form(LoginForm::class);
 
+mount(function () {
+    $this->errorMessage = session()->get('error_message') ?? '';
+});
+
 $login = function () {
+    $this->errorMessage = '';
+
     $this->validate();
 
     $this->form->authenticate();
@@ -21,97 +30,100 @@ $login = function () {
 };
 
 $signInWithGoogle = function () {
+    $this->errorMessage = '';
+
     return redirect()->route('oauth.redirect', ['provider' => 'google', 'frompage' => 'signin']);
 }
 
 ?>
 
-<div class="min-vw-100">
-    <main class="form-signin w-100 m-auto">
-        <div class="card border-light-subtle">
-            <div class="card-body">
-                <p class="text-center text-secondary-emphasis fs-4 m-0 p-0">{{ __('Welcome.') }}</p>
-                <p class="text-center text-secondary">
-                    {{ __('Please enter your credentials to sign in') }}
-                </p>
-                <form wire:submit="login">
-                    <div class="form-floating">
-                        <input type="email" class="form-control shadow-none rounded-0" wire:model="form.email" name="email" id="email" placeholder="{{ __('Email') }}" required autofocus autocomplete="off">
-                        <label for="email">{{ __('Email') }}</label>
-                    </div>
-                    <div class="form-floating mb-1">
-                        <input type="password" class="form-control shadow-none rounded-0" wire:model="form.password" name="password" id="password" placeholder="{{ __('Password') }}">
-                        <label for="password">Password</label>
-                    </div>
-                    <div class="row row-cols-1 mb-3">
-                        <a href="{{ route('password.request') }}" class="col text-end fs-md">Forgot password?</a>
-                    </div>
+<div>
+    <section class="d-flex align-items-center justify-content-center vh-100 overflow-hidden">
+        <div class="form-signin w-100 m-auto">
+            <div class="card border-light-subtle">
+                <div class="card-body">
+                    <p class="text-center text-secondary-emphasis fs-4 m-0 p-0">{{ __('Welcome.') }}</p>
+                    <p class="text-center text-secondary">
+                        {{ __('Please enter your credentials to sign in') }}
+                    </p>
+                    @if ($errorMessage != "")
+                        <div class="alert alert-danger" role="alert" wire:loading.remove wire:target="login, signInWithGoogle">
+                            {{ $errorMessage }}
+                        </div>
+                    @endif
+                    <form wire:submit="login">
+                        <div class="input-group has-validation mb-4">
+                            <div class="form-floating {{ $errors->has('form.email') ? 'is-invalid' : '' }}">
+                                <input
+                                    type="email"
+                                    name="email"
+                                    id="email"
+                                    class="form-control shadow-none rounded-0 {{ $errors->has('form.email') ? 'is-invalid' : '' }}"
+                                    placeholder="{{ __('Email') }}"
+                                    wire:model="form.email">
+                                <label for="email">{{ __('Email') }}</label>
+                            </div>
+                            <div class="invalid-feedback">
+                                {{ collect($errors->get('form.email'))->first() }}
+                            </div>
+                        </div>
+
+                        <div class="input-group has-validation">
+                            <div class="form-floating {{ $errors->has('form.password') ? 'is-invalid' : '' }}">
+                                <input type="password"
+                                    class="form-control shadow-none rounded-0 {{ $errors->has('form.password') ? 'is-invalid' : '' }}"
+                                    wire:model="form.password" name="password" id="password" placeholder="{{ __('Password') }}">
+                                <label for="password">{{ __('Password') }}</label>
+                            </div>
+                            <div class="invalid-feedback">
+                                {{ collect($errors->get('form.password'))->first() }}
+                            </div>
+                        </div>
+                        <div class="mb-4 mt-1 float-end">
+                            <a href="{{ route('password.request') }}" class="fs-md">Forgot password?</a>
+                        </div>
+
+                        <div class="mb-4">
+                            <button
+                                type="submit"
+                                class="btn btn-primary w-100 py-3 fw-bold"
+                                wire:loading.attr="disabled">
+                                <span wire:loading.remove wire:target="login">{{ __('Sign In') }}</span>
+
+                                <span
+                                    class="spinner-border spinner-border-sm text-light" aria-hidden="true"
+                                    wire:loading
+                                    wire:target="login">
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="line-divider mb-4">OR</div>
+
                     <div class="mb-4">
-                        <button type="submit" class="btn btn-primary w-100 py-3 fw-bold">{{ __('Sign In') }}</button>
+                        <button
+                            class="btn btn-light btn-with-icon border w-100 py-3 fw-medium" wire:click="signInWithGoogle"
+                            wire:loading.class.remove="btn-with-icon"
+                            wire:loading.attr="disabled">
+                            <span class="icon" wire:loading.remove wire:target="signInWithGoogle">
+                                <img src="{{ asset('images/icon/google.png') }}" alt="Google Icon">
+                            </span>
+                            <span class="text" wire:loading.remove wire:target="signInWithGoogle">{{ __('Sign In with Google') }}</span>
+
+                            <span
+                                class="spinner-border spinner-border-sm text-secondary" aria-hidden="true"
+                                wire:loading
+                                wire:target="signInWithGoogle">
+                            </span>
+                        </button>
                     </div>
-                </form>
-
-                <div class="line-divider mb-4">OR</div>
-
-                <div class="mb-4">
-                    <button wire:click="signInWithGoogle" class="btn btn-light btn-with-icon border w-100 py-3 fw-medium">
-                        <span class="icon">
-                            <img src="{{ asset('images/icon/google.png') }}" alt="Google Icon">
-                        </span>
-                        <span class="text">{{ __('Sign In with Google') }}</span>
-                    </button>
                 </div>
             </div>
+            <div class="row row-cols-1 mt-2">
+                <div class="col text-center text-md-end fs-md"> {{ __('Don\'t have account?') }} <a
+                        href="{{ route('register') }}">{{ __('Sign Up') }}</a></div>
+            </div>
         </div>
-        <div class="row row-cols-1 mt-2">
-            <div class="col text-center text-md-end fs-md"> {{ __('Don\'t have account?') }} <a
-                    href="{{ route('register') }}">{{ __('Sign Up') }}</a></div>
-        </div>
-    </main>
+    </section>
 </div>
-
-{{-- <div>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form wire:submit="login">
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="form.email" id="email" class="block mt-1 w-full" type="email" name="email" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('form.email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input wire:model="form.password" id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('form.password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember" class="inline-flex items-center">
-                <input wire:model="form.remember" id="remember" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}" wire:navigate>
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</div> --}}

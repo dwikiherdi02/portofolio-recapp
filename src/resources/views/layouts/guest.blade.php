@@ -6,14 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }} | {{ $title ?? '' }}</title>
 
     <!-- Scripts -->
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 </head>
 
-<body class="d-flex align-items-center justify-content-center vh-100 overflow-hidden">
-    {{ $slot }}
+<body class="m-0 p-0">
+    <main>
+        {{ $slot }}
+    </main>
 </body>
 
 </html>

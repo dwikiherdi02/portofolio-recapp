@@ -2,10 +2,7 @@
 
 use App\Http\Controllers\Auth\OauthController;
 use App\Http\Controllers\Auth\VerifyEmailController;
-use Facades\App\Repositories\UserRepository as UserRepo;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Route;
-use Laravel\Socialite\Facades\Socialite;
 use Livewire\Volt\Volt;
 
 Route::middleware('guest')->group(function () {

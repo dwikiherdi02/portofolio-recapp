@@ -16,10 +16,14 @@ class MustCreatePassword
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && empty(Auth::user()->password)) {
-            dd('Create password page');
-            // return redirect()->route('create_password');
+        if (
+            Auth::check() &&
+            empty(Auth::user()->password) &&
+            request()->route()->getName() != "create_password"
+        ) {
+            return redirect()->route('create_password');
         }
+
         return $next($request);
     }
 }
