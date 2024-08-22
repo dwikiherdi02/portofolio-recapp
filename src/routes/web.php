@@ -3,17 +3,17 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect()->route('dashboard');
 });
 
 // Route::view('/', 'welcome');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::middleware(['auth', 'verified', 'must_create_password'])->group(function () {
+    // Dashboard page
+    Route::view('dashboard', 'dashboard')->name('dashboard');
 
-Route::view('profile', 'profile')
-    ->middleware(['auth'])
-    ->name('profile');
+    // Profile page
+    Route::view('profile', 'profile')->name('profile');
+});
 
 require __DIR__ . '/auth.php';
