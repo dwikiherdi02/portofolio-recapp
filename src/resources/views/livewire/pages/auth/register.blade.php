@@ -2,7 +2,7 @@
 
 use function Livewire\Volt\{ layout, title };
 
-layout('layouts.guest');
+layout('layouts.dafault');
 
 title('Sign Up');
 

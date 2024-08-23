@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Session;
 
 use function Livewire\Volt\{mount, layout, title, state, form};
 
-layout('layouts.guest');
+layout('layouts.default');
 
 title('Sign In');
 

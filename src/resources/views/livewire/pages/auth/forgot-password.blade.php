@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Session;
 
 use function Livewire\Volt\{ layout, title, state, rules };
 
-layout('layouts.guest');
+layout('layouts.default');
 
 title('Forgot Password');
 

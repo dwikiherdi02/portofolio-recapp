@@ -4,7 +4,7 @@ use App\Livewire\Forms\CreatePasswordForm;
 
 use function Livewire\Volt\{boot, layout, title, form};
 
-layout('layouts.app');
+layout('layouts.default');
 
 title('Create Password');
 
