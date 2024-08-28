@@ -1,0 +1,15 @@
+/*
+* main container
+*/
+body {
+    .main-container {
+        min-height: calc(100vh - 56px) !important;
+        margin-top: 56px !important;
+    }
+
+    // @include media-breakpoint-up(md) {
+    //     main {
+    //         margin-left: 240px !important;
+    //     }
+    // }
+}

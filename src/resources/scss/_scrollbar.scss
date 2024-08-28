@@ -1,0 +1,42 @@
+:root {
+    --page-background: white;
+
+    --scrollbar-track: transparent;
+    --scrollbar-thumb: rgba(var(--bs-tertiary-bg-rgb), var(--bs-bg-opacity)) !important;
+    --scrollbar-thumb-hover: rgba(var(--bs-secondary-bg-rgb), var(--bs-bg-opacity)) !important;
+
+    --scrollbar-width: 5px;
+}
+
+/* Firefox */
+* {
+    scrollbar-width: var(--scrollbar-width);
+    /* none | auto  */
+    scrollbar-color: rgba(var(--bs-secondary-bg-rgb), var(--bs-bg-opacity)) var(--scrollbar-track) !important;
+}
+
+/* Firefox */
+
+/* Chrome, Edge, Safari */
+*::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+    /* vertical scrollbar */
+    height: var(--scrollbar-width);
+    /* horizontal scrollbar */
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+*::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: var(--scrollbar-width);
+    border: calc(var(--scrollbar-width) / 4) solid var(--page-background);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+}
+
+/* Chrome, Edge, Safari */

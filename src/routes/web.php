@@ -15,7 +15,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware(['must_create_password'])->group(function () {
         // Dashboard page
-        Route::view('dashboard', 'dashboard')->name('dashboard');
+        Volt::route('dashboard', 'dashboard')->name('dashboard');
 
         // Profile page
         Route::view('profile', 'profile')->name('profile');

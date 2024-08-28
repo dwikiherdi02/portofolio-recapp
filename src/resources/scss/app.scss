@@ -32,8 +32,8 @@ $success: #7952b3;
 @import "bootstrap/scss/transitions";
 @import "bootstrap/scss/dropdown";
 // @import "bootstrap/scss/button-group";
-// @import "bootstrap/scss/nav";
-// @import "bootstrap/scss/navbar"; // Requires nav
+@import "bootstrap/scss/nav";
+@import "bootstrap/scss/navbar"; // Requires nav
 @import "bootstrap/scss/card";
 // @import "bootstrap/scss/breadcrumb";
 // @import "bootstrap/scss/accordion";
@@ -53,19 +53,35 @@ $success: #7952b3;
 // @import "bootstrap/scss/placeholders";
 
 // Helpers
-// @import "bootstrap/scss/helpers";
+@import "bootstrap/scss/helpers";
+
+// Fontawesome Fre
+@import "node_modules/@fortawesome/fontawesome-free/css/all.min.css";
+// @import "fa/scss/fontawesome";
+// @import "fa/scss/brands";
+// @import "fa/scss/regular";
+// @import "fa/scss/solid";
+// @import "fa/scss/v4-shims";
 
 // Utilities
 @import "bootstrap/scss/utilities/api";
+
+@import "dashboard";
+
+@import "header";
+
+@import "sidebar";
 
 @import "form-sign";
 
 @import "fs";
 
+// @import "scrollbar";
+
 
 body {
-    padding: 0;
-    margin: 0;
+    min-height: 100vh !important;
+    min-height: -webkit-fill-available;
 }
 
 body, h1, h2, h3, h4, h5, h6 {
@@ -123,6 +139,28 @@ a {
     &:not(:empty)::after {
         margin-left: .25em;
     }
+}
+
+.nav-pills {
+
+    .nav-item {
+
+        .nav-link {
+
+            &.active {
+                background-image: none !important;
+            }
+        }
+    }
+}
+
+.sscrollbar {
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
 }
 
 @include media-breakpoint-down(sm) {

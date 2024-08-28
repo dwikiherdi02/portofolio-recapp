@@ -10,26 +10,42 @@
         <!-- Scripts -->
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
     </head>
-    <body class="m-0 p-0">
-        <main>
-            {{ $slot }}
-        </main>
-        {{-- <div class="min-h-screen bg-gray-100">
-            <livewire:layout.navigation />
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+    {{-- Body --}}
+    <body class="bg-white">
+        {{-- Header --}}
+        <x-header />
+        {{-- ./Header --}}
+
+        {{-- Main Container --}}
+        <div class="container-fluid main-container">
+            {{-- Main Row --}}
+            <div class="row">
+                {{-- Sidebar --}}
+                <x-sidebar />
+                {{-- ./Sidebar --}}
+
+                {{-- Main --}}
+                <main class="col-md-9 col-lg-10 ms-sm-auto px-md-4">
+                    {{-- Page Name --}}
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">{{ __('Dashboard') }}</h1>
                     </div>
-                </header>
-            @endif
+                    {{-- ./Page Name --}}
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div> --}}
+                    {{-- Content --}}
+                    <div class="container-fluid px-0">
+                        <div class="row row-cols-1">
+                            {{ $slot }}
+                        </div>
+                    </div>
+                    {{-- ./Content --}}
+                </main>
+                {{-- ./Main --}}
+            </div>
+            {{-- ./Main Row --}}
+        </div>
+        {{-- ./Main Container --}}
     </body>
+    {{-- ./Body --}}
 </html>
